@@ -1,0 +1,5 @@
+(library
+  (name codeMap)
+  (public_name code-map)
+  (libraries unicode)
+)
