@@ -31,6 +31,20 @@ let next t =
     next = t.next
   }
 
+let union a b =
+  if b.last > a.last && b.next > b.next then
+    {
+      first = min a.first b.first;
+      last = b.last;
+      next = b.next
+    }
+  else
+    {
+      first = min a.first b.first;
+      last = a.last;
+      next = a.next
+    }
+
 type 'a located = 'a * t
 
 let located span x = x, span

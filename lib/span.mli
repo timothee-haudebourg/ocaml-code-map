@@ -16,7 +16,9 @@ val push : Unicode.UChar.t -> t -> t
 
 val next : t -> t
 
-type 'a located
+val union : t -> t -> t
+
+type 'a located = 'a * t
 (** Type of located values. *)
 
 val located : t -> 'a -> 'a located
