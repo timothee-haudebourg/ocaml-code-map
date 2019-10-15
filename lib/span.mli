@@ -21,6 +21,9 @@ val union : t -> t -> t
 val print : t -> out_channel -> unit
 (** [print span] format the span [span]. *)
 
+val format : t -> Format.formatter -> unit
+(** [format span] format the span [span]. *)
+
 type 'a located = 'a * t
 (** Type of located values. *)
 

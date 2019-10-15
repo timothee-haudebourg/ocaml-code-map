@@ -28,3 +28,9 @@ val print : t -> out_channel -> unit
 
 val print_short : t -> out_channel -> unit
 (** [print_short pos] format the position [pos] in the format "line:column". *)
+
+val format : t -> Format.formatter -> unit
+(** [print pos] format the position [pos] in the format "line x column y". *)
+
+val format_short : t -> Format.formatter -> unit
+(** [print_short pos] format the position [pos] in the format "line:column". *)

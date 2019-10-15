@@ -51,6 +51,12 @@ let print t fmt =
   else
     Printf.fprintf fmt "from %t to %t" (Position.print t.first) (Position.print t.last)
 
+let format t fmt =
+  if t.first = t.last then
+    Position.format t.first fmt
+  else
+    Format.fprintf fmt "from %t to %t" (Position.format t.first) (Position.format t.last)
+
 type 'a located = 'a * t
 
 let located span x = x, span

@@ -51,3 +51,9 @@ let print p fmt =
 
 let print_short p fmt =
   Printf.fprintf fmt "%d:%d" (p.line+1) (p.column+1)
+
+let format p fmt =
+  Format.fprintf fmt "line %d column %d" (p.line+1) (p.column+1)
+
+let format_short p fmt =
+  Format.fprintf fmt "%d:%d" (p.line+1) (p.column+1)
