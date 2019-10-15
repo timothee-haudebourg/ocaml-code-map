@@ -23,8 +23,8 @@ val next_line : t -> t
 val next : Unicode.UChar.t -> t -> t
 (** [next c pos] move the position [pos] following the given character [c]. *)
 
-val print : t -> Format.formatter -> unit
+val print : t -> out_channel -> unit
 (** [print pos] format the position [pos] in the format "line x column y". *)
 
-val print_short : t -> Format.formatter -> unit
+val print_short : t -> out_channel -> unit
 (** [print_short pos] format the position [pos] in the format "line:column". *)
