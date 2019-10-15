@@ -18,6 +18,9 @@ val next : t -> t
 
 val union : t -> t -> t
 
+val print : t -> Format.formatter -> unit
+(** [print span] format the span [span]. *)
+
 type 'a located = 'a * t
 (** Type of located values. *)
 
