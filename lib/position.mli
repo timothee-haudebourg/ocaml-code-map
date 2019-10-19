@@ -23,6 +23,19 @@ val next_line : t -> t
 val next : Unicode.UChar.t -> t -> t
 (** [next c pos] move the position [pos] following the given character [c]. *)
 
+val compare : t -> t -> int
+(** [compare a b] compare two positions. *)
+
+val min : t -> t -> t
+
+val max : t -> t -> t
+
+val tab_length : t -> int
+(** Get the tablength at the given position. *)
+
+val print_tab : t -> out_channel -> unit
+(** Print a tabulation from the given position. *)
+
 val print : t -> out_channel -> unit
 (** [print pos] format the position [pos] in the format "line x column y". *)
 

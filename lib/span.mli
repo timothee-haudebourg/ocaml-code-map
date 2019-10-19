@@ -18,6 +18,21 @@ val next : t -> t
 
 val union : t -> t -> t
 
+val includes : t -> Position.t -> bool
+
+val includes_line : t -> int -> bool
+
+val is_included : t -> t -> bool
+(** [is_included a b] checks if [b] is included in [a]. *)
+
+val is_multi_line : t -> bool
+(** [is_muli_line s] checks if [s] includes multiple lines. *)
+
+val aligned : ?margin:int -> t -> t
+
+val compare : t -> t -> int
+(** [compare a b] compare two spans. *)
+
 val print : t -> out_channel -> unit
 (** [print span] format the span [span]. *)
 
