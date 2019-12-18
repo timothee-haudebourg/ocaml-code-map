@@ -1,0 +1,31 @@
+src/buffer.cmo : \
+    src/position.cmi \
+    src/buffer.cmi
+src/buffer.cmx : \
+    src/position.cmx \
+    src/buffer.cmi
+src/buffer.cmi : \
+    src/position.cmi
+src/formatter.cmo : \
+    src/span.cmi \
+    src/position.cmi \
+    src/formatter.cmi
+src/formatter.cmx : \
+    src/span.cmx \
+    src/position.cmx \
+    src/formatter.cmi
+src/formatter.cmi : \
+    src/span.cmi
+src/position.cmo : \
+    src/position.cmi
+src/position.cmx : \
+    src/position.cmi
+src/position.cmi :
+src/span.cmo : \
+    src/position.cmi \
+    src/span.cmi
+src/span.cmx : \
+    src/position.cmx \
+    src/span.cmi
+src/span.cmi : \
+    src/position.cmi

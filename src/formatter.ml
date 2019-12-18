@@ -365,6 +365,7 @@ let print t input span out =
   let out = create_pp_out out in
   let rec print_line skipping pos input =
     if is_relevant pos.Position.line then begin
+      (* Print the left margin *)
       print_line_number line_number_margin (Some pos.Position.line) out;
       for m = 0 to margin - 1 do
         match List.find_opt (function h -> h.Highlight.nest_level = m + 1 && Span.includes h.Highlight.span pos) t.highlights with
@@ -373,6 +374,7 @@ let print t input span out =
         | None ->
           pp_output_char out None ' '
       done;
+      (* Print the line content *)
       let rec print_chars pos input =
         if Position.compare pos (Span.next_position span) <= 0 then begin
           begin match input () with
@@ -401,6 +403,7 @@ let print t input span out =
       in
       print_chars pos input
     end else begin
+      (* If the line is not relevant *)
       if not skipping then
         pp_output_string out None "...\n";
       let rec skip_chars pos input =

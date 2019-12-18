@@ -31,7 +31,12 @@ let next t =
     next = t.next
   }
 
+let is_empty t =
+  t.first == t.next
+
 let union a b =
+  if is_empty a then b else
+  if is_empty b then a else
   if (Position.compare b.last a.last > 0) && (Position.compare b.next a.next > 0) then
     {
       first = Position.min a.first b.first;
@@ -74,6 +79,9 @@ let aligned ?(margin=0) t =
       column = max_int
     }
   }
+
+let from_start t =
+  { t with first = Position.default; last = Position.default }
 
 let compare a b =
   let c = Position.compare a.first b.first in

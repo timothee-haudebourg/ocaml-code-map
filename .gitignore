@@ -1,4 +1,9 @@
-_build
-*.install
-*.opam
 lib/.merlin
+*.a
+*.cma
+*.cmi
+*.cmo
+*.cmx
+*.cmxa
+*.cmxs
+*.o

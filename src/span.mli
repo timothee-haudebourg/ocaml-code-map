@@ -30,6 +30,9 @@ val is_multi_line : t -> bool
 
 val aligned : ?margin:int -> t -> t
 
+val from_start : t -> t
+(** Extends the span so it starts from the position 0. *)
+
 val compare : t -> t -> int
 (** [compare a b] compare two spans. *)
 
