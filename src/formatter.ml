@@ -349,7 +349,11 @@ let print_line_decoration t line_number_margin margin line out =
   in
   CharMap.print charmap line line_number_margin margin handles out
 
-let print t input span out =
+let line_number_margin span =
+  let line = (Span.last span).line in
+  int_of_float (log10 (float_of_int (line + 1))) + 1
+
+let print t ?(highlights_margin = 1) input span out =
   (* Sort every highlight and compute their nest level. *)
   t.highlights <- List.stable_sort (Highlight.compare) t.highlights;
   List.iter (
@@ -357,14 +361,20 @@ let print t input span out =
       Highlight.compute_nest_level h t.highlights
   ) t.highlights;
   let margin = List.fold_right (fun h m -> max h.Highlight.nest_level m) t.highlights 0 in
-  let line_number_margin = if t.show_line_numbers then int_of_float (log10 (float_of_int ((Span.last span).line + 1))) + 1 else 0 in
+  let line_number_margin = if t.show_line_numbers then
+      line_number_margin span
+    else
+      0
+  in
   let is_relevant line =
-    List.exists (function h -> Span.includes_line (Span.aligned ~margin:2 h.Highlight.span) line) t.highlights
+    List.exists (function h -> Span.includes_line (Span.aligned ~margin:highlights_margin h.Highlight.span) line) t.highlights
   in
   (* Print every line. *)
   let out = create_pp_out out in
-  let rec print_line skipping pos input =
+  let rec print_line (skipping, empty) pos input =
     if is_relevant pos.Position.line then begin
+      if skipping && not empty then
+        pp_output_string out None "...\n";
       (* Print the left margin *)
       print_line_number line_number_margin (Some pos.Position.line) out;
       for m = 0 to margin - 1 do
@@ -386,7 +396,7 @@ let print t input span out =
                 | 0x0a -> (* \n *)
                   pp_output_char out None '\n';
                   print_line_decoration t line_number_margin margin pos.line out;
-                  print_line false (Position.next c pos) input'
+                  print_line (false, false) (Position.next c pos) input'
                 | _ ->
                   pp_output_string out None (Utf8String.of_char c);
                   print_chars (Position.next c pos) input'
@@ -403,16 +413,13 @@ let print t input span out =
       in
       print_chars pos input
     end else begin
-      (* If the line is not relevant *)
-      if not skipping then
-        pp_output_string out None "...\n";
       let rec skip_chars pos input =
         if Position.compare pos (Span.next_position span) <= 0 then begin
           begin match input () with
             | Seq.Cons (c, input') ->
               begin match UChar.to_int c with
                 | 0x0a -> (* \n *)
-                  print_line true (Position.next c pos) input'
+                  print_line (true, empty) (Position.next c pos) input'
                 | _ ->
                   skip_chars (Position.next c pos) input'
               end
@@ -423,5 +430,5 @@ let print t input span out =
       skip_chars pos input
     end
   in
-  print_line true (Span.first span) input;
+  print_line (true, true) (Span.first span) input;
   pp_reset out

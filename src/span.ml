@@ -81,7 +81,7 @@ let aligned ?(margin=0) t =
   }
 
 let from_start t =
-  { t with first = Position.default; last = Position.default }
+  { t with first = Position.default }
 
 let compare a b =
   let c = Position.compare a.first b.first in
@@ -92,7 +92,7 @@ let print t fmt =
   if t.first = t.last then
     Position.print t.first fmt
   else if t.first.line = t.last.line then
-    Printf.fprintf fmt "line %d columns %d to %d" t.first.line t.first.column t.last.column
+    Printf.fprintf fmt "line %d columns %d to %d" (t.first.line + 1) (t.first.column + 1) (t.last.column + 1)
   else
     Printf.fprintf fmt "%t to %t" (Position.print t.first) (Position.print t.last)
 
@@ -100,7 +100,7 @@ let format t fmt =
   if t.first = t.last then
     Position.format t.first fmt
   else if t.first.line = t.last.line then
-    Format.fprintf fmt "line %d columns %d to %d" t.first.line t.first.column t.last.column
+    Format.fprintf fmt "line %d columns %d to %d" (t.first.line + 1) (t.first.column + 1) (t.last.column + 1)
   else
     Format.fprintf fmt "%t to %t" (Position.format t.first) (Position.format t.last)
 

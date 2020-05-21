@@ -18,5 +18,5 @@ val create : unit -> t
 val add : t -> Span.t -> string option -> Highlight.style -> unit
 (** Add a span highlight to the formatter. *)
 
-val print : t -> UChar.t Seq.t -> Span.t -> out_channel -> unit
+val print : t -> ?highlights_margin:int -> UChar.t Seq.t -> Span.t -> out_channel -> unit
 (** Print the formatted input char sequence, with the given span. *)
